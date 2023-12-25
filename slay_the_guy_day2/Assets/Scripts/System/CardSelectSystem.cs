@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class CardSelectSystem
 {
+    private GameObject playerObject;
+    private GameObject enemyObject;
     private List<CardSelectComponent> cardSelectComponentList = new List<CardSelectComponent>();
-    public CardSelectSystem(GameEvent gameEvent)
+    private List<CardBaseComponent> cardBaseComponentList = new List<CardBaseComponent>();
+
+    public CardSelectSystem(GameEvent gameEvent, GameObject player, GameObject enemyObject)
     {
+        this.playerObject = player;
+        this.enemyObject = enemyObject;
         gameEvent.AddComponentList += AddComponentList;
         gameEvent.RemoveComponentList += RemoveComponentList;
     }
 
     private void Initialize(CardSelectComponent cardSelectComponent)
     {
+        cardSelectComponent.BasePosition = cardSelectComponent.transform.position;
+        cardSelectComponent.BaseRotation = cardSelectComponent.transform.rotation;
         cardSelectComponent.Size = cardSelectComponent.gameObject.GetComponent<RectTransform>().sizeDelta * cardSelectComponent.gameObject.transform.localScale;
     }
 
@@ -21,13 +29,27 @@ public class CardSelectSystem
         for (int i = 0; i < cardSelectComponentList.Count; i++)
         {
             CardSelectComponent cardSelectComponent = cardSelectComponentList[i];
+            CardBaseComponent cardBaseComponent = cardBaseComponentList[i];
             if (!cardSelectComponent.gameObject.activeSelf) continue;
 
-            if (!SelectCard(cardSelectComponent)) continue;
+            if (!SelectCard(cardSelectComponent))
+            {
+                cardSelectComponent.transform.position = cardSelectComponent.BasePosition;
+                cardSelectComponent.transform.rotation = cardSelectComponent.BaseRotation;
+                continue;
+            }
+            cardSelectComponent.transform.position = cardSelectComponent.BasePosition + cardSelectComponent.PositionOffset;
+            // Debug.Log(cardSelectComponent.transform.position);
 
             if (!Input.GetMouseButtonDown(0)) continue;
 
-            Debug.Log("Select Card");
+            CharacterBaseComponent characterBaseComponent = playerObject.GetComponent<CharacterBaseComponent>();
+            if (characterBaseComponent.Mana < cardBaseComponent.Cost) continue;
+            enemyObject.GetComponent<DamageComponent>().Damage += 1;
+            playerObject.GetComponent<CharacterBaseComponent>().Mana += cardBaseComponent.Cost;
+            // cardSelectComponent.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -10));
+            // cardSelectComponent.transform.position = new Vector3(cardSelectComponent.transform.position.x, cardSelectComponent.transform.position.y, -10);
+            // Debug.Log(cardSelectComponent.transform.position);
         }
     }
 
@@ -80,9 +102,12 @@ public class CardSelectSystem
     public void AddComponentList(GameObject gameObject)
     {
         CardSelectComponent cardSelectComponent = gameObject.GetComponent<CardSelectComponent>();
-        if (cardSelectComponent == null) return;
+        CardBaseComponent cardBaseComponent = gameObject.GetComponent<CardBaseComponent>();
+
+        if (cardSelectComponent == null || cardBaseComponent == null) return;
 
         cardSelectComponentList.Add(cardSelectComponent);
+        cardBaseComponentList.Add(cardBaseComponent);
 
         Initialize(cardSelectComponent);
     }
@@ -90,8 +115,11 @@ public class CardSelectSystem
     public void RemoveComponentList(GameObject gameObject)
     {
         CardSelectComponent cardSelectComponent = gameObject.GetComponent<CardSelectComponent>();
-        if (cardSelectComponent == null) return;
+        CardBaseComponent cardBaseComponent = gameObject.GetComponent<CardBaseComponent>();
+
+        if (cardSelectComponent == null || cardBaseComponent == null) return;
 
         cardSelectComponentList.Remove(cardSelectComponent);
+        cardBaseComponentList.Remove(cardBaseComponent);
     }
 }

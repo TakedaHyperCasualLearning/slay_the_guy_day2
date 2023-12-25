@@ -11,12 +11,14 @@ public class Main : MonoBehaviour
 
     private HitPointUISystem hitPointUISystem;
     private CardSelectSystem cardSelectSystem;
+    private DamageSystem damageSystem;
     void Start()
     {
         gameEvent = new GameEvent();
 
         hitPointUISystem = new HitPointUISystem(gameEvent);
-        cardSelectSystem = new CardSelectSystem(gameEvent);
+        cardSelectSystem = new CardSelectSystem(gameEvent, player, enemy);
+        damageSystem = new DamageSystem(gameEvent);
 
         gameEvent.AddComponentList?.Invoke(player);
         gameEvent.AddComponentList?.Invoke(enemy);
@@ -30,5 +32,6 @@ public class Main : MonoBehaviour
     {
         hitPointUISystem.OnUpdate();
         cardSelectSystem.OnUpdate();
+        damageSystem.OnUpdate();
     }
 }

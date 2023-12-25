@@ -731,6 +731,7 @@ GameObject:
   - component: {fileID: 500497716}
   - component: {fileID: 500497720}
   - component: {fileID: 500497719}
+  - component: {fileID: 500497721}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -832,6 +833,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPointUI: {fileID: 2109765320}
+--- !u!114 &500497721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500497714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d161df000db8843879d5fb8e940b4db1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &567392668
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,6 +934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b344e3963704e8ea36d21912e4fda4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  positionOffset: {x: 0, y: 5, z: 0}
 --- !u!1 &572444716
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,6 +1024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b344e3963704e8ea36d21912e4fda4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  positionOffset: {x: 0, y: 5, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,7 +1473,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1591,6 +1606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b344e3963704e8ea36d21912e4fda4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  positionOffset: {x: 0, y: 5, z: 0}
 --- !u!1 &1244698571
 GameObject:
   m_ObjectHideFlags: 0
@@ -1680,6 +1696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b344e3963704e8ea36d21912e4fda4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  positionOffset: {x: 0, y: 5, z: 0}
 --- !u!1 &1265899339
 GameObject:
   m_ObjectHideFlags: 0
@@ -2149,6 +2166,7 @@ GameObject:
   - component: {fileID: 1697549540}
   - component: {fileID: 1697549544}
   - component: {fileID: 1697549543}
+  - component: {fileID: 1697549545}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -2250,6 +2268,18 @@ MonoBehaviour:
   hitPoint: 50
   hitPointMax: 0
   attackPoint: 1
+--- !u!114 &1697549545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697549538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d161df000db8843879d5fb8e940b4db1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1871838370
 GameObject:
   m_ObjectHideFlags: 0
@@ -2339,6 +2369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b344e3963704e8ea36d21912e4fda4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  positionOffset: {x: 0, y: 5, z: 0}
 --- !u!1 &1916586809
 GameObject:
   m_ObjectHideFlags: 0
