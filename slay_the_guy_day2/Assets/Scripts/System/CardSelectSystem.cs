@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,10 @@ public class CardSelectSystem
 
     public void OnUpdate()
     {
+        if (!playerObject.GetComponent<TurnComponent>().IsMyTurn) return;
+
+        List<int> selectIndexList = new List<int>();
+
         for (int i = 0; i < cardSelectComponentList.Count; i++)
         {
             CardSelectComponent cardSelectComponent = cardSelectComponentList[i];
@@ -39,14 +44,31 @@ public class CardSelectSystem
                 continue;
             }
             cardSelectComponent.transform.position = cardSelectComponent.BasePosition + cardSelectComponent.PositionOffset;
-            // Debug.Log(cardSelectComponent.transform.position);
 
-            if (!Input.GetMouseButtonDown(0)) continue;
+            selectIndexList.Add(i);
+            if (selectIndexList.Count >= 2)
+            {
+                for (int j = 0; j < selectIndexList.Count - 1; j++)
+                {
+                    cardSelectComponentList[selectIndexList[j]].transform.position = cardSelectComponentList[selectIndexList[j]].BasePosition;
+                    cardSelectComponentList[selectIndexList[j]].transform.rotation = cardSelectComponentList[selectIndexList[j]].BaseRotation;
+                }
+            }
+
+            if (!Input.GetMouseButton(0)) continue;
+
+            if (i != selectIndexList[selectIndexList.Count - 1]) continue;
 
             CharacterBaseComponent characterBaseComponent = playerObject.GetComponent<CharacterBaseComponent>();
             if (characterBaseComponent.Mana < cardBaseComponent.Cost) continue;
             enemyObject.GetComponent<DamageComponent>().Damage += 1;
-            playerObject.GetComponent<CharacterBaseComponent>().Mana += cardBaseComponent.Cost;
+            playerObject.GetComponent<CharacterBaseComponent>().Mana -= cardBaseComponent.Cost;
+            // cardBaseComponent.gameObject.SetActive(false);
+            Vector3 tempPos = Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0);
+            tempPos.z = 0;
+            Debug.Log(tempPos);
+            Debug.Log(cardBaseComponent.GetComponent<RectTransform>().anchoredPosition);
+            cardBaseComponent.GetComponent<RectTransform>().anchoredPosition = tempPos;
             // cardSelectComponent.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -10));
             // cardSelectComponent.transform.position = new Vector3(cardSelectComponent.transform.position.x, cardSelectComponent.transform.position.y, -10);
             // Debug.Log(cardSelectComponent.transform.position);

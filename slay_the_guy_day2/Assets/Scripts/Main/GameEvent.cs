@@ -7,4 +7,6 @@ public class GameEvent
 {
     public Action<GameObject> AddComponentList;
     public Action<GameObject> RemoveComponentList;
+    public Action<GameObject> TurnEnd;
+    public Func<List<CardBaseComponent>> DrawCard;
 }
